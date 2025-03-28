@@ -1,0 +1,39 @@
+%Duvan Arley Valencia Castaño - 20211196484
+T = [1, 0, 0, 100;
+     0, 1, 0, 100;
+     0, 0, 1, 100;
+     0, 0, 0, 1];
+
+L1=317;
+L2=450;
+L3=480;
+L4=70;
+
+nx = 1; ny = 0; nz = 0;
+ox = 0; oy = 1; oz = 0;
+ax = 0; ay = 0; az = 1;
+pex = 100; pey = pex; pez = pex;
+
+pmx = pex-L4*ax;
+pmy = pey-L4*ay;
+pmz = pez-L4*az;
+
+q1 = atan2(pmy,pmx);
+a = pmx*cos(q1)+pmy*sin(q1);
+b = pmz-L1;
+q3 = acos((a^2 +b^2 -L2^2 -L3^2)/(2*L2*L3));
+q2 = acos((a*L3*sin(q3)+b*L3*cos(q3)+b*L2)/(a^2 + b^2));
+q4 = atan2((-ax*sin(q1)+ay*cos(q1)),(ax*cos(q1)*cos(q2+q3)+ay*sin(q1)*cos(q2+q3)-az*sin(q2+q3)));
+q5 = acos(ax*cos(q1)*sin(q2+q3)+ay*sin(q1)*sin(q2+q3)+az*cos(q2+q3));
+q6 = atan2(-(ox*cos(q1)*sin(q2+q3)+oy*sin(q1)*sin(q2+q3)+oz*cos(q2+q3)),(nx*cos(q1)*sin(q2+q3)+ny*sin(q1)*sin(q2+q3)+nz*cos(q2+q3)));
+
+pxe = cos(q1)(L3*sin(q2+q3)+L2*sin(q2)+L4(sin(q2+q3)*cos(q5)+cos(q2+q3)*cos(q4)*sin(q5)))-L4*sin(q1)*sin(q4)*sin(q5);
+pye = sin(q1)(L3*sin(q2+q3)+L2*sin(q2)+L4(sin(q2+q3)*cos(q5)+cos(q2+q3)*cos(q4)*sin(q5)))+L4*cos(q1)*sin(q4)*sin(q5);
+pze = L1+L3*cos(q2+q3)+L2*cos(q2)+L4*(cos(q2+q3)*cos(q5)-sin(q2+q3)*cos(q4)*sin(q5));
+
+disp('--- Valores de a y b ---')
+fprintf('a = %.4f, b = %.4f\n\n', a, b);
+disp('--- Valores de los ángulos ---')
+fprintf('q1 = %.4f, q2 = %.4f, q3 = %.4f, q4 = %.4f, q5 = %.4f, q6 = %.4f\n\n', q1, q2, q3, q4, q5, q6);
+disp('--- Coordenadas finales ---')
+fprintf('pxe = %.4f, pye = %.4f, pze = %.4f\n', pxe, pye, pze);
